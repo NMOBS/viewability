@@ -1,0 +1,86 @@
+<html>
+  <head>
+    <title>Test</title>
+    <script src="/viewability.js"></script>
+    <script src="/draggable.js"></script>
+    <style>
+      .red {
+        padding: 40px;
+        color: white;
+        background: red;
+        width: 400px;
+        margin: 30px auto;
+        text-align: center;
+        text-transform: uppercase;
+        font-weight: bold;
+        font-size: 24px;
+      }
+
+      .box {
+        width:100px;
+        height:100px;
+        position:absolute;
+        z-index:1;
+        top:100px;
+        cursor:move;
+      }
+
+      .box:nth-of-type(1){
+        left:10%;
+        background: blue;
+      }
+
+      .box:nth-of-type(2){
+        background: green;
+        width:200px;
+        height:200px;
+        left:40%;
+      }
+      .box:nth-of-type(3){
+        background: red;
+        width:150px;
+        right:10%;
+      }
+    </style>
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        setInterval(() => {
+          let element = document.getElementById('test');
+          console.log("%" + checkElementOnScreen(element))
+          element.innerText = "%" + checkElementOnScreen(element)
+        }, 1000)
+      })
+    </script>
+  </head>
+  <body>
+    <h1>Test</h1>
+    <h1>Test</h1>
+    <h1>Test</h1>
+    <h1>Test</h1>
+    <h1>Test</h1>
+    <h1>Test</h1>
+    <h1>Test</h1>
+    <h1>Test</h1>
+    <h1>Test</h1>
+    <pre class="red" id="test">
+Test
+    </pre>
+    <div class="box"></div>
+    <div class="box"></div>
+    <div class="box"></div>
+    <h1>Test</h1>
+    <h1>Test</h1>
+    <h1>Test</h1>
+    <h1>Test</h1>
+    <h1>Test</h1>
+    <h1>Test</h1>
+    <h1>Test</h1>
+    <h1>Test</h1>
+    <h1>Test</h1>
+    <h1>Test</h1>
+    <h1>Test</h1>
+    <h1>Test</h1>
+    <h1>Test</h1>
+    <h1>Test</h1>
+  </body>
+</html>
