@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+
+  <script src="../dist/viewability.js"></script>
+  <style>
+    #example {
+      width: 250px;
+      height: 100px;
+      background-color: red;
+    }
+  </style>
+</head>
+<body>
+  <div id="example"></div>
+
+  <script>
+
+    const element = document.getElementById('example')
+    const creative = viewability.init(element, {
+      limit: 10,
+      interval: 100,
+    })
+
+    creative.on((result, stop) => {
+      console.log('On:', result)
+
+      // If you want to stop the viewability checkers, you should call `stop` function.
+    })
+
+    // Impression
+    creative.impression(result => console.log('Impression'))
+  </script>
+
+</body>
+</html>
