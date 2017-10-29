@@ -2,16 +2,17 @@ import emitter from './emitter'
 import checkers from './checkers'
 
 let listenerCount = 0
-let supportedCheckers = []
-let unsupportedCheckers = []
+let supportedCheckers = {}
+let unsupportedCheckers = {}
 
 export default (element, options) => {
-  checkers.all.forEach(checker => {
+  Object.keys(checkers.all).forEach(key => {
+    let checker = checkers.all[key]
     if (checker.support()) {
-      supportedCheckers.push(checker)
+      supportedCheckers[key] = checker
     }
     else {
-      unsupportedCheckers.push(checker)
+      unsupportedCheckers[key] = checker
     }
   })
 
@@ -28,22 +29,7 @@ export default (element, options) => {
 const start = (checkers, element, options) => {
   let count = 0
 
-  const interval = setInterval(() => {
-
-    let results = {}
-    checkers.forEach(checker => {
-      results[checker.name] = checker.check(element, options)
-    })
-
-    // Status calculation
-    let status = false
-    if (
-      results.cssVisibility === true &&
-      results.elementOnScreen > 50
-    ) {
-      status = true
-    }
-
+  const fireEmit = (status, results) => {
     if (status === true) {
       count++
     } else {
@@ -52,13 +38,48 @@ const start = (checkers, element, options) => {
 
     // Impression
     if (count >= options.limit) {
-      emitter.emit('impression', { status: true })
+      emitter.emit('impression', { status: true, results: results })
     }
 
     emitter.emit('viewability', {
-      status: status
+      status: status,
+      results: results
     })
+  }
 
+  const interval = setInterval(() => {
+    let results = {}
+    let status = true
+
+    let documentVisibility = checkers.documentVisibility.check(element, options)
+    results["documentVisibility"] = documentVisibility
+
+    // Document Visibility
+    if (!documentVisibility ) { status = false }
+    if (!status) { return fireEmit(status, results) }
+
+    // CSS Visibility
+    let cssVisibility = checkers.cssVisibility.check(element, options)
+    results["cssVisibility"] = cssVisibility
+
+    if (!cssVisibility ) { status = false }
+    if (!status) { return fireEmit(status, results) }
+
+    // Element On Screen
+    let elementOnScreen = checkers.elementOnScreen.check(element, options)
+    results["elementOnScreen"] = elementOnScreen
+
+    if (results["elementOnScreen"] < options.min) { status = false }
+    if (!status) { return fireEmit(status, results) }
+
+
+    // Element On Screen
+    let domOverlapping = checkers.domOverlapping.check(element, options)
+    results["domOverlapping"] = domOverlapping
+
+    if (((results["elementOnScreen"] / 100) * (100 - results["domOverlapping"])) < options.min) { status = false }
+
+    return fireEmit(status, results)
   }, options.interval)
 
   // Stop checker
