@@ -11,6 +11,17 @@
       height: 100px;
       background-color: red;
     }
+
+    #popup {
+      position: fixed;
+      width: 98%;
+      height: 98%;
+      margin: 1%;
+      z-index: 2147483647;
+      background-color: black;
+      top:0px; 
+      left: 0px;
+    }
   </style>
 </head>
 <body>
@@ -73,6 +84,7 @@
   <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quaerat voluptas architecto nobis perferendis natus exercitationem, rerum cum molestias ex quo expedita explicabo. Necessitatibus ullam, sequi minima! Magni provident, aspernatur perferendis.</p>
   <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quaerat voluptas architecto nobis perferendis natus exercitationem, rerum cum molestias ex quo expedita explicabo. Necessitatibus ullam, sequi minima! Magni provident, aspernatur perferendis.</p>
 
+  <div id="popup"></div>
   <script>
 
     const element = document.getElementById('example')
