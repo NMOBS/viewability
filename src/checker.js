@@ -6,6 +6,15 @@ let supportedCheckers = {}
 let unsupportedCheckers = {}
 
 export default (element, options) => {
+  options.is_video = options.is_video || false
+  options.intervalTimer = options.is_video ? 100 : 200
+  options.limit = options.limit || 10
+
+  options.width = options.width || element.offsetWidth
+  options.height = options.height || element.offsetHeight
+  let area = options.width * options.height
+  options.percantageCheck = (area > 242500) ? 30 : 50
+
   Object.keys(checkers.all).forEach(key => {
     let checker = checkers.all[key]
     if (checker.support()) {
@@ -69,7 +78,7 @@ const start = (checkers, element, options) => {
     let elementOnScreen = checkers.elementOnScreen.check(element, options)
     results["elementOnScreen"] = elementOnScreen
 
-    if (results["elementOnScreen"] < options.min) { status = false }
+    if (results["elementOnScreen"] < options.percantageCheck) { status = false }
     if (!status) { return fireEmit(status, results) }
 
 
@@ -77,10 +86,10 @@ const start = (checkers, element, options) => {
     let domOverlapping = checkers.domOverlapping.check(element, options)
     results["domOverlapping"] = domOverlapping
 
-    if (((results["elementOnScreen"] / 100) * (100 - results["domOverlapping"])) < options.min) { status = false }
+    if (((results["elementOnScreen"] / 100) * (100 - results["domOverlapping"])) < options.percantageCheck) { status = false }
 
     return fireEmit(status, results)
-  }, options.interval)
+  }, options.intervalTimer)
 
   // Stop checker
   emitter.on('stop', () => {
