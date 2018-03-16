@@ -1,7 +1,7 @@
 export const name = 'documentVisibility'
 
 export const check = (element, opions) => {
-  return document.hasFocus() || (document.visibilityState == 'visible')
+  return document.hasFocus() && (document.visibilityState == 'visible')
 }
 
 // @TODO
