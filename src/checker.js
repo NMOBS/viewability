@@ -93,6 +93,7 @@ const start = (checkers, element, options) => {
 
   // Stop checker
   emitter.on('stop', () => {
+    if (listenerCount < 1) return;
     if (listenerCount === 1) {
       clearInterval(interval)
     }
