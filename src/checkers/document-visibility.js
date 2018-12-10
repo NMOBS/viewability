@@ -1,7 +1,7 @@
 export const name = 'documentVisibility'
 
-export const check = (element, opions) => {
-  return document.hasFocus() && (document.visibilityState == 'visible')
+export const check = (element, options) => {
+  return options.window.document.hasFocus() && (options.window.document.visibilityState == 'visible')
 }
 
 // @TODO

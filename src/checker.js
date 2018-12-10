@@ -9,7 +9,6 @@ export default (element, options) => {
   options.is_video = options.is_video || false
   options.intervalTimer = options.is_video ? 100 : 200
   options.limit = options.limit || 10
-
   options.width = options.width || element.offsetWidth
   options.height = options.height || element.offsetHeight
   let area = options.width * options.height
@@ -93,6 +92,7 @@ const start = (checkers, element, options) => {
 
   // Stop checker
   emitter.on('stop', () => {
+    if (listenerCount < 1) return;
     if (listenerCount === 1) {
       clearInterval(interval)
     }

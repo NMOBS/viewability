@@ -1,7 +1,7 @@
 export const name = 'cssVisibility'
 
-export const check = (element, opions) => {
-  const style = window.getComputedStyle(element, null)
+export const check = (element, options) => {
+  const style = options.window.getComputedStyle(element, null)
   const visibility = style.getPropertyValue('visibility')
   const display = style.getPropertyValue('display')
 

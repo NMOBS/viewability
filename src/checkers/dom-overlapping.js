@@ -38,7 +38,7 @@ export const check = (element, options) => {
   testPoints.forEach(({x, y}) => {
     // console.log('Testing: ', x, y)
     // TODO: Check x y are defined
-    let testElement = document.elementFromPoint(x, y)
+    let testElement = options.window.document.elementFromPoint(x, y)
     // console.log('Found Element: ', testElement)
     // Return if the test element is null or element or contained by the element
     if (testElement == null || testElement == element || element.contains(testElement)) { return }

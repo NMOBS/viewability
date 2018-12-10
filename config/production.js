@@ -7,12 +7,11 @@ const baseConfig = require('./base')
 module.exports = merge(baseConfig, {
 
   output: {
-    filename: '[name].min.js',
+    filename: '[name].js',
     path: path.resolve('./dist')
   },
 
   plugins: [
-    new UglifyJSPlugin()
   ]
 
 })
