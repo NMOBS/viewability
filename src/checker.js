@@ -63,14 +63,14 @@ const start = (checkers, element, options) => {
     results["documentVisibility"] = documentVisibility
 
     // Document Visibility
-    if (!documentVisibility ) { status = false }
+    if (!documentVisibility) { status = false }
     if (!status) { return fireEmit(status, results) }
 
     // CSS Visibility
     let cssVisibility = checkers.cssVisibility.check(element, options)
     results["cssVisibility"] = cssVisibility
 
-    if (!cssVisibility ) { status = false }
+    if (!cssVisibility) { status = false }
     if (!status) { return fireEmit(status, results) }
 
     // Element On Screen
@@ -85,7 +85,7 @@ const start = (checkers, element, options) => {
     let domOverlapping = checkers.domOverlapping.check(element, options)
     results["domOverlapping"] = domOverlapping
 
-    if (((results["elementOnScreen"] / 100) * (100 - results["domOverlapping"])) < options.percantageCheck) { status = false }
+    if ((((results["elementOnScreen"] / 100) * (100 - results["domOverlapping"])) < options.percantageCheck) && !options.bubble) { status = false }
 
     return fireEmit(status, results)
   }, options.intervalTimer)
